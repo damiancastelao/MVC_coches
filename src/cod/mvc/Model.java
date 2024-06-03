@@ -1,3 +1,5 @@
+package cod.mvc;
+
 import java.util.ArrayList;
 
 public class Model {
@@ -74,4 +76,3 @@ public class Model {
         return (coche != null) ? coche.getVelocidad() : null;
     }
 }
-
