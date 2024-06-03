@@ -1,15 +1,30 @@
 package cod.mvc;
 
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * La clase Model representa el modelo de la aplicación de gestión de coches.
+ * Es responsable de almacenar y gestionar los datos de los coches, así como de
+ * notificar a los observadores sobre los cambios en el estado de los coches.
+ */
 public class Model {
     private static Model instance;
     private ArrayList<Coche> parking;
+    private List<Observer> observers;
 
+    /**
+     * Constructor privado para garantizar que solo haya una instancia de Model.
+     */
     private Model() {
         parking = new ArrayList<>();
+        observers = new ArrayList<>();
     }
 
+    /**
+     * Método estático para obtener la instancia única de Model.
+     * @return La instancia única de Model.
+     */
     public static Model getInstance() {
         if (instance == null) {
             instance = new Model();
@@ -17,62 +32,65 @@ public class Model {
         return instance;
     }
 
-    public Coche crearCoche(String modelo, String matricula) {
-        Coche aux = new Coche(modelo, matricula);
-        parking.add(aux);
-        return aux;
-    }
-
-    public Coche getCoche(String matricula) {
-        for (Coche e : parking) {
-            if (e.getMatricula().equals(matricula)) {
-                return e;
-            }
-        }
-        return null;
-    }
-
-    public Integer cambiarVelocidad(String matricula, Integer v) {
-        Coche coche = getCoche(matricula);
-        if (coche != null) {
-            coche.setVelocidad(v);
-            return coche.getVelocidad();
-        }
-        return null;
+    /**
+     * Registra un observador para recibir notificaciones sobre cambios en el modelo.
+     * @param observer El observador a registrar.
+     */
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
     }
 
     /**
-     * Sube la velocidad del coche en 'v' unidades.
-     * @param matricula la matrícula del coche.
-     * @param v la cantidad de unidades para subir la velocidad.
-     * @return la nueva velocidad.
+     * Elimina un observador previamente registrado.
+     * @param observer El observador a eliminar.
+     */
+    public void unregisterObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    /**
+     * Notifica a todos los observadores registrados sobre un cambio en el modelo.
+     * @param matricula La matrícula del coche que ha cambiado.
+     * @param velocidad La nueva velocidad del coche.
+     */
+    private void notifyObservers(String matricula, Integer velocidad) {
+        for (Observer observer : observers) {
+            observer.update(matricula, velocidad);
+        }
+    }
+
+    // Otros métodos existentes...
+
+    /**
+     * Aumenta la velocidad de un coche y notifica a los observadores.
+     * @param matricula La matrícula del coche.
+     * @param v La cantidad en la que se aumentará la velocidad.
+     * @return La nueva velocidad del coche después de aumentarla.
      */
     public Integer subirVelocidad(String matricula, Integer v) {
         Coche coche = getCoche(matricula);
         if (coche != null) {
             coche.setVelocidad(coche.getVelocidad() + v);
+            notifyObservers(matricula, coche.getVelocidad());
             return coche.getVelocidad();
         }
         return null;
     }
 
     /**
-     * Baja la velocidad del coche en 'v' unidades.
-     * @param matricula la matrícula del coche.
-     * @param v la cantidad de unidades para bajar la velocidad.
-     * @return la nueva velocidad.
+     * Reduce la velocidad de un coche y notifica a los observadores.
+     * @param matricula La matrícula del coche.
+     * @param v La cantidad en la que se reducirá la velocidad.
+     * @return La nueva velocidad del coche después de reducirla.
      */
     public Integer bajarVelocidad(String matricula, Integer v) {
         Coche coche = getCoche(matricula);
         if (coche != null) {
             coche.setVelocidad(coche.getVelocidad() - v);
+            notifyObservers(matricula, coche.getVelocidad());
             return coche.getVelocidad();
         }
         return null;
     }
-
-    public Integer getVelocidad(String matricula) {
-        Coche coche = getCoche(matricula);
-        return (coche != null) ? coche.getVelocidad() : null;
-    }
 }
+
