@@ -19,9 +19,9 @@ public class Controller {
         boolean hecho = miView.muestraVelocidad("SBC 1234", miModel.getVelocidad("SBC 1234"));
 
         if (hecho) {
-            System.out.println("Correcto");
+            System.out.println("[LOG] Correcto");
         } else {
-            System.out.println("Error");
+            System.out.println("[LOG] Error");
         } ;
     }
 }
