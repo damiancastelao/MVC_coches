@@ -1,6 +1,13 @@
-import java.lang.module.ModuleDescriptor;
-
+/**
+ * Clase Controller
+ * @author Anxo Vázquez
+ * @version 1.0
+ */
 public class Controller {
+    /**
+     * Mét0do main que lanza el menu de la view
+     * @param args
+     */
     public static void main(String[] args) {
         // Instanciamos la vista y el modelo
         View miView = new View();
@@ -22,6 +29,37 @@ public class Controller {
             System.out.println("[LOG] Correcto");
         } else {
             System.out.println("[LOG] Error");
-        } ;
+        }
+
+        System.out.println("================");
+        while(true) {
+            String[] respuesta = View.menu();
+
+            //SALIR
+            if (respuesta[0].compareTo("s") == 0) {
+                System.out.println("Saliendo...");
+                break;
+            }
+
+            //CREAR COCHE
+            if (respuesta[0].compareTo("c") == 0) { //coche
+                miModel.crearCoche(respuesta[1], respuesta[2]);
+            } else if (respuesta[0].compareTo("v") == 0) { //VER VELOCIDAD
+                boolean confirmacion = miView.muestraVelocidad(respuesta[1], miModel.getVelocidad(respuesta[1]));
+                if (confirmacion) {
+                    System.out.println("[LOG] Correcto");
+                } else {
+                    System.out.println("[LOG] Error");
+                }
+            }else{
+                System.out.println("[LOG] ERROR opción incorrecta");
+            }
+
+
+
+
+
+        }
     }
+
 }
