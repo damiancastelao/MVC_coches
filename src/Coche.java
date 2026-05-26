@@ -49,8 +49,4 @@ public class Coche {
      * @param velocidad
      * @return velocidad int
      */
-    public int aumentarVel(int velocidad){
-        this.velocidad+=velocidad;
-        return velocidad;
-    }
 }
