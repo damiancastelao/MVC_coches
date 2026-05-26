@@ -2,6 +2,9 @@ import java.util.ArrayList;
 
 /**
  * Clase encargada de manejar los datos
+ *
+ * @author Anxo Vázquez
+ * @version examen
  */
 public class Model {
     static ArrayList<Coche> parking = new ArrayList<>();
@@ -21,7 +24,7 @@ public class Model {
     /**
      * Busca coche segun matricula
      * @param matricula a buscar
-     * @return chche o null si no existe
+     * @return coche o null si no existe
      */
     public Coche getCoche(String matricula){
         Coche aux = null;
@@ -32,6 +35,21 @@ public class Model {
             }
         }
         return aux;
+    }
+
+    /**
+     * Métod0 acelerar que aumenta la velocidad de un coche usanbdo el métod0 Coche.aumentarVel()
+     * @param matricula
+     * @param velocidad
+     * @return velocidad int
+     */
+    public int acelerar(String matricula, int velocidad){
+        Coche coche = this.getCoche(matricula);
+        if(coche == null){ //No se encontró coche
+            return -1;
+        }else{
+            return coche.aumentarVel(velocidad); //aumenta la velocidad y la devuelve
+        }
     }
 
     /**
