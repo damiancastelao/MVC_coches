@@ -53,6 +53,21 @@ public class Model {
     }
 
     /**
+     * Métod0 que aumenta la gasolina de un coche
+     * @param matricula
+     * @param gasolina
+     * @return int gasolina
+     */
+    public int cargarGasolina(String matricula, int gasolina){
+        Coche coche = this.getCoche(matricula);
+        if(coche == null){
+            return -1;
+        }else{
+            return coche.aumentarGas(gasolina);
+        }
+    }
+
+    /**
      * Cambia la velocidad de un coche
      * @param matricula
      * @param v nueva velocidad
